@@ -17,6 +17,15 @@ defmodule MachOneWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api" do
+    pipe_through :api
+    forward("/",Absinthe.Plug, schema: MachOneWeb.Schema)
+  end
+
+  scope "/gql" do
+    forward "/GraphiQL", Absinthe.Plug.GraphiQL, schema: MachOneWeb.Schema
+  end
+
   scope "/", MachOneWeb do
     pipe_through :browser
 
